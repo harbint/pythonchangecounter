@@ -9,14 +9,15 @@ class MakeChangeTest(unittest.TestCase):
     def tearDown(self):
         pass
 
-    def testName(self):
         #data bounds tests
+    def testInputTypes(self):
         self.assertEqual([], mc.makeChange(-1)) #tests out of bounds lower
         self.assertEqual([], mc.makeChange(100.1)) #tests out of bounds upper
         self.assertEqual([], mc.makeChange("hello there")) #test to assure only accept int/float values
         self.assertEqual([], mc.makeChange()) #tests input of nothing
         
         #general use tests
+    def testGeneralUse(self):
         self.assertEqual([0,0,0,0,0,0,0,0], mc.makeChange(0))
         self.assertEqual([0,0,0,1,0,0,0,0], mc.makeChange(1))
         self.assertEqual([0,0,0,3,1,0,0,1], mc.makeChange(3.26))
@@ -24,6 +25,7 @@ class MakeChangeTest(unittest.TestCase):
         self.assertEqual([1,1,1,1,1,1,1,1], mc.makeChange(36.41))
         self.assertEqual([0,0,0,1,0,0,0,0], mc.makeChange(amount=1))
         
-        #rounding tests
+        #rounding tests 
+    def testRounding(self):
         self.assertEqual([0,0,0,1,0,0,0,0], mc.makeChange(1.001)) #tests rounding down 
         self.assertEqual([0,0,0,1,0,0,0,1], mc.makeChange(1.005)) #tests rounding up to the nearest penny
